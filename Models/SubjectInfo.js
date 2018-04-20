@@ -10,4 +10,4 @@ description:{
  required:false
 }
 });
-module.exports = mongoose.model('Subjectnfo', SubjectInfo);
+module.exports = mongoose.model('SubjectInfo', SubjectInfo);

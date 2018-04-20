@@ -1,16 +1,18 @@
 {
   "name": "subject-schedule",
   "version": "1.0.0",
-  "description": "schedule api for api",
+  "description": "webhook for subject schedule",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "http://localhost:8080"
   },
-  "author": "Maxine Nicole",
+  "author": "Maxine Velasco",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.3",
-    "mongoose": "^5.0.15"
-  },
-  "devDependencies": {}
+    "mongo": "^0.1.0",
+    "mongoose": "^5.0.15",
+    "request": "^2.85.0"
+  }
 }

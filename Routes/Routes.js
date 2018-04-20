@@ -8,5 +8,5 @@ app.get('/',function(req,res){
   });
 // registerUser Route
   app.route('/')
-    .post(ScheduleDataController.processRequest);
+    .post(scheduleDataController.processRequest);
 };

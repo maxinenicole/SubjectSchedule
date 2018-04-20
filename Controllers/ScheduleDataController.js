@@ -12,10 +12,10 @@ if (req.body.result.action == "schedule") {
       getSubjectInfo(req,res)
   }
 };
-
+/*
 function getSubjectInfo(req,res)
 {
-let subjectToSearch = req.body.result && req.body.result.parameters && req.body.result.parameters.subject ? req.body.result.parameters.subject : 'Unknown';
+let subjectToSearch = req.body.result && req.body.result.parameters && req.body.result.parameters.subjectName ? req.body.result.parameters.subjectName : 'Unknown';
 SubjectInfo.findOne({name:subjectToSearch},function(err,subjectExists)
       {
         if (err)
@@ -26,7 +26,7 @@ SubjectInfo.findOne({name:subjectToSearch},function(err,subjectExists)
               source: 'subject info'
           });
         }
-if (subjectExists)
+		if (subjectExists)
         {
           return res.json({
                 speech: subjectExists.description,
@@ -36,14 +36,44 @@ if (subjectExists)
         }
         else {
           return res.json({
-                speech: 'Currently I am not having information about this subject',
-                displayText: 'Currently I am not having information about this subject',
+                speech: 'Currently I am not having info about this team',
+                displayText: 'Currently I am not having information about this team',
+                source: 'subject info'
+            });
+        }
+      });
+}*/
+
+function getSubjectInfo(req,res)
+{
+	let subjectToSearch = req.body.result && req.body.result.parameters && req.body.result.parameters.subjectName ? req.body.result.parameters.subjectName : 'Unknown';
+	SubjectInfo.findOne({name:subjectToSearch},function(err, subjectExists)
+	{
+        if (err)
+        {
+          return res.json({
+              speech: 'Something went wrong!',
+              displayText: 'Something went wrong!',
+              source: 'subject info'
+          });
+        }
+		if (subjectExists)
+        {
+          return res.json({
+                speech: subjectExists.description,
+                displayText: subjectExists.description,
+                source: 'subject existssss'
+            });
+        }
+        else {
+          return res.json({
+                speech: 'Currently I am not having info about '+subjectToSearch,
+                displayText: 'Currently I am not having information about this team',
                 source: 'subject info'
             });
         }
       });
 }
-
 function getSubjectSchedule(req,res)
 {
 let parameters = req.body.result.parameters;
@@ -54,40 +84,40 @@ let parameters = req.body.result.parameters;
       if (game_occurence == "previous")
       {
         //previous game
-        GameSchedule.find({opponent:team},function(err,subject)
+        SubjectSchedule.find({opponent:team},function(err,games)
         {
           if (err)
           {
             return res.json({
                 speech: 'Something went wrong!',
                 displayText: 'Something went wrong!',
-                source: 'subject schedule'
+                source: 'game schedule'
             });
           }
-          if (subject)
+          if (games)
           {
-            var requiredSubject;
-            for (var i=0; i < subject.length; i++)
+            var requiredGame;
+            for (var i=0; i < games.length; i++)
             {
-                var subject = subject[i];
+                var game = games[i];
 var convertedCurrentDate = new Date();
-                var convertedSubjectDate = new Date(subject.date);
-if (convertedSubjectDate > convertedCurrentDate)
+                var convertedGameDate = new Date(game.date);
+if (convertedGameDate > convertedCurrentDate)
                 {
-                  if(subject.length > 1)
+                  if(games.length > 1)
                   {
-                    requiredSubject = subject[i-1];
+                    requiredGame = games[i-1];
 var winningStatement = "";
-                    if (requiredSubject.isWinner)
+                    if (requiredGame.isWinner)
                     {
-                        winningStatement = "Kings won this match by "+requiredSubject.score;
+                        winningStatement = "Kings won this match by "+requiredGame.score;
                     }
                     else {
-                      winningStatement = "Kings lost this match by "+requiredSubject.score;
+                      winningStatement = "Kings lost this match by "+requiredGame.score;
                     }
                     return res.json({
-                        speech: 'Last game between Kings and '+parameters.team+' was played on '+requiredSubject.date+' .'+winningStatement,
-                        displayText: 'Last game between Kings and '+parameters.team+' was played on '+requiredSubject.date+' .'+winningStatement,
+                        speech: 'Last game between Kings and '+parameters.team+' was played on '+requiredGame.date+' .'+winningStatement,
+                        displayText: 'Last game between Kings and '+parameters.team+' was played on '+requiredGame.date+' .'+winningStatement,
                         source: 'game schedule'
                     });
                     break;

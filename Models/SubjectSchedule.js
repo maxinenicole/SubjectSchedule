@@ -1,15 +1,24 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var SubjectSchedule = new Schema({
+
 date:{
  type:Date,
  required:false
 },
-subject:{
+opponent:{
  type:String,
  required:false
 },
-dayOfTheWeek:{
+hasBeenPlayed:{
+  type:Boolean,
+  required:false
+},
+isWinner:{
+  type:Boolean,
+  required:false
+},
+score:{
   type:String,
   required:false
 }
